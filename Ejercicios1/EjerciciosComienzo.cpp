@@ -178,12 +178,41 @@ unsigned int ocurrenciasSubstring(char **vecStr, int largoVecStr, char *substr)
 	// IMPLEMENTAR SOLUCION
     return 0;
 }
+int compararStringsAux(const char *str1, const char *str2) {
+    while (*str1 != '\0' && *str2 != '\0') {
+        if (*str1 < *str2) {
+            return -1;
+        } else if (*str1 > *str2) {
+            return 1;
+        }
+        str1++;
+        str2++;
+    }
+    
+    //Si el primero termio antes es el menor
+    if (*str1 == '\0' && *str2 != '\0') {
+        return -1; // str1 es menor
+    }
+    //Si el segundo termio antes es el menor
+    if (*str2 == '\0' && *str1 != '\0') {
+        return 1;
+    }
+    return 0; // Son iguales
+}
 
-char **ordenarVecStrings(char **vecStr, int largoVecStr)
-{
+
+char **ordenarVecStrings(char **vecStr, int largoVecStr){
     //EJERCICIO OBLIGATORIO
-	// IMPLEMENTAR SOLUCION
-    return NULL;
+    for (int i = 0; i < largoVecStr - 1; i++) {
+        for (int j = 0; j < largoVecStr - i - 1; j++) {
+            if (compararStringsAux(vecStr[j], vecStr[j + 1]) > 0) {
+                char *aux = vecStr[j];
+                vecStr[j] = vecStr[j + 1];
+                vecStr[j + 1] = aux;
+            }
+        }
+    }
+    return vecStr;
 }
 
 char** splitStr(char* str, char separador, int &largoRet)
