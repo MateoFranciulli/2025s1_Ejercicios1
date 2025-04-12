@@ -63,29 +63,109 @@ void ordenarVecInt(int *vec, int largoVec) {
             }
         }
     }
-    
-    
-    
 }
+    
+    
+    
+
 
 int* intercalarVector(int* v1, int* v2, int l1, int l2){
     //EJERCICIO OBLIGATORIO
     // IMPLEMENTAR SOLUCION
-	return NULL;
+    int* v3 = new int[l1 + l2];
+    int* p = v1;
+    int* p2 = v2;
+    int aux = 0;
+    
+    if (l1 == 0 && l2 == 0) {
+            return NULL;
+        } else if (l1 == 0) {        // Si v1 es vacio retorno v2
+            int* v3 = new int[l2];
+            for (int i = 0; i < l2; ++i) {
+                v3[i] = v2[i];
+            }
+            return v3;
+       
+        } else if (l2 == 0) {  // Si v2 es vacio, retorno v1
+            int* v3 = new int[l1];
+            for (int i = 0; i < l1; ++i) {
+                v3[i] = v1[i];
+            }
+            return v3;
+        }
+    
+    while (p < v1 + l1 && p2 < v2 + l2) {
+        if (*p < *p2) {
+            v3[aux++] = *p++;
+        } else if (*p == *p2) {
+            v3[aux++] = *p2++;
+            v3[aux++] = *p++;
+        } else {
+            v3[aux++] = *p2++;
+        }
+    }
+    
+    
+    while (p < v1 + l1) {
+        v3[aux++] = *p++;
+    }
+    
+   
+    while (p2 < v2 + l2) {
+        v3[aux++] = *p2++;
+    }
+    
+    return v3;
+}
+    
+
+
+bool subconjuntoVector(int* v1, int* v2, int l1, int l2){
+    //EJERCICIO OBLIGATORIO
+    
+    if(l1 == 0) return true;
+    if(l2 == 0) return false;
+    bool esSubconjunto = false;
+    for(int i = 0; i < l1; i++){
+        for(int j = 0; j < l2; j++){
+            if(v1[i] == v2[j]){
+                esSubconjunto = true;
+                break;
+            }
+        }
+        if(!esSubconjunto){ //Si no encuentro el v1 en v2 termino
+            return false;
+        }
+    }
+    
+    return esSubconjunto;
 }
 
-bool subconjuntoVector(int* v1, int* v2, int l1, int l2)
-{
-    //EJERCICIO OBLIGATORIO
-    // IMPLEMENTAR SOLUCION
-	return false;
+char invertirCaseAux(char c) { //Invierto el char
+    if (c >= 'a' && c <= 'z') {
+        return c - ('a' - 'A');
+    } else if (c >= 'A' && c <= 'Z') {
+        return c + ('a' - 'A');
+    }
+    return c;
 }
 
-char* invertirCase(char* str)
-{
+
+char* invertirCase(char* str){
     //EJERCICIO OBLIGATORIO
-    // IMPLEMENTAR SOLUCION
-	return NULL;
+    int largo = 0;
+    while (str[largo] != '\0') {
+        largo++;
+    }
+    char* resultado = new char[largo + 1];
+    int i = 0;
+    while (str[i] != '\0') {
+        resultado[i] = invertirCaseAux(str[i]);
+        i++;
+    }
+    
+    resultado[i] = '\0'; // Char de finl
+    return resultado;
 }
 
 int islas(char** mapa, int col, int fil){
